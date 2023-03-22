@@ -80,8 +80,13 @@ public class CustomOidcClientInitiatedLogoutSuccessHandler extends SimpleUrlLogo
 
     private String endpointUri(HttpServletRequest request, URI endSessionEndpoint, String idToken, String postLogoutRedirectUri) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUri(endSessionEndpoint);
+
+        String locale = (String) request.getAttribute(UI_LOCALES_PARAMETER);
+
         builder.queryParam("id_token_hint", idToken);
-        builder.queryParam(UI_LOCALES_PARAMETER, request.getAttribute(UI_LOCALES_PARAMETER));
+        if (locale != null) {
+            builder.queryParam(UI_LOCALES_PARAMETER, locale);
+        }
         if (postLogoutRedirectUri != null) {
             builder.queryParam("post_logout_redirect_uri", postLogoutRedirectUri);
         }
