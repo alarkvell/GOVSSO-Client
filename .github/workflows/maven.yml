@@ -28,8 +28,8 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-    - name: Build with Maven
-      run: mvn --batch-mode --update-snapshots dependency:tree spring-boot:build-image
+    - name: Build
+      run: mvn --batch-mode --update-snapshots -Dspring-boot.build-image.imageName=library/govsso-client:develop dependency:tree spring-boot:build-image
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     #- name: Maven Dependency Tree Dependency Submission
@@ -47,3 +47,6 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
 
 # docker/metadata-action -- tag?
+
+    - name: Push Docker Image
+      run: docker push library/govsso-client:develop
