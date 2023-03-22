@@ -1,21 +1,14 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
-
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-name: Java CI with Maven
-
+name: Build and push Docker image
 on:
   push:
     branches: [ "develop" ]
 #  pull_request:
 #    branches: [ "develop" ]
-
+env:
+  IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/govsso-client:develop
 jobs:
   build:
+    name: Build
     permissions:
       packages: write
 #      contents: read
@@ -32,7 +25,7 @@ jobs:
         cache: maven
 
     - name: Build
-      run: mvn --batch-mode --update-snapshots -Dspring-boot.build-image.imageName=ghcr.io/alarkvell/govsso-client:develop dependency:tree spring-boot:build-image
+      run: mvn --batch-mode --update-snapshots -Dspring-boot.build-image.imageName=$IMAGE_NAME dependency:tree spring-boot:build-image
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     #- name: Maven Dependency Tree Dependency Submission
@@ -51,5 +44,5 @@ jobs:
 
 # docker/metadata-action -- tag?
 
-    - name: Push Docker Image
-      run: docker push ghcr.io/alarkvell/govsso-client:develop
+    - name: Push Docker image
+      run: docker push $IMAGE_NAME
