@@ -5,7 +5,7 @@ on:
 #  pull_request:
 #    branches: [ "develop" ]
 env:
-  IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/govsso-client:develop
+  IMAGE_NAME: alarkvell/govsso-client:develop
 jobs:
   build:
     name: Build
@@ -35,12 +35,11 @@ jobs:
     #  "message": "Resource not accessible by integration",
     #  "documentation_url": "https://docs.github.com/rest/reference/dependency-graph#create-a-snapshot-of-dependencies-for-a-repository"
 
-    - name: Login to GitHub Container Registry
+    - name: Login to Docker Hub
       uses: docker/login-action@v2
       with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
 # docker/metadata-action -- tag?
 
