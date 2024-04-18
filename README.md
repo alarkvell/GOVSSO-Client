@@ -1,6 +1,6 @@
 <img src="src/main/resources/static/assets/eu_regional_development_fund_horizontal.jpg" width="350" height="200" alt="European Union European Regional Development Fund"/>
 
-# GovSSO Example Client
+# GovSSO Example Client 1
 
 Example client application that integrates with GovSSO service with protocol specified
 at https://e-gov.github.io/GOVSSO/TechnicalSpecification . Demonstrates authentication, session update, RP-initiated
